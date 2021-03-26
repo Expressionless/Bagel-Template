@@ -1,12 +1,16 @@
 package main;
 
-import main.game.Game;
+import java.util.logging.Logger;
+
+import main.game.Engine;
 
 public class Main {
+	private static final Logger log = Logger.getLogger(Main.class.getName());
 
 	public static void main(String[] args) {
-        Game game = new Game();
-        game.run();
+		log.info("Starting Engine");
+        Engine engine = new Engine();
+        engine.run();
 	}
 	
 }

@@ -1,5 +1,7 @@
 package main.engine.state;
 
+import main.game.Engine;
+
 /**
  * Basic State Object
  * @author bmeachem
@@ -8,6 +10,7 @@ package main.engine.state;
 public abstract class State {
 	
 	protected String name;
+	protected boolean initialized = false;
 
 	public abstract void init();
 	
@@ -20,5 +23,9 @@ public abstract class State {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public boolean isInitialized() {
+		return initialized;
 	}
 }

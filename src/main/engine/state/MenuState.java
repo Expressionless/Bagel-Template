@@ -1,5 +1,7 @@
 package main.engine.state;
 
+import main.game.Engine;
+
 public class MenuState extends State {
 
 	public MenuState() {
@@ -8,7 +10,11 @@ public class MenuState extends State {
 
 	@Override
 	public void init() {
-
+		if(initialized)
+			return;
+		initialized = true;
+		
+		Engine.setState(Engine.gameState);
 	}
 
 	@Override

@@ -1,14 +1,18 @@
 package main.engine;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import main.engine.alarm.Alarm;
 import main.engine.res.Sprite;
 import main.engine.utils.Point;
+import main.engine.view.Camera;
 
 public abstract class GameObject {
 	public static final int ALARM_COUNT = 10;
 	public static final ArrayList<GameObject> OBJECTS = new ArrayList<>();
+	
+	protected static final Logger log = Logger.getLogger(GameObject.class.getName());
 	
 	protected abstract void step();
 	protected abstract void draw();
@@ -19,6 +23,7 @@ public abstract class GameObject {
 	protected Point pos;
 	
 	public GameObject(Point pos) {
+		log.info("Created new Game Object at: (" + pos.getX() + ", " + pos.getY() + ")");
 		this.pos = pos;
 		for(int i = 0; i < ALARM_COUNT - 1; i++){
 			alarm[i] = new Alarm(null);
@@ -40,30 +45,24 @@ public abstract class GameObject {
 		draw();
 	}
 	
-	public void renderAll() {
+	public static void renderAll(Camera camera) {
 		for(GameObject object : OBJECTS) {
-			object.render();
+			if(camera.shouldDoRender(object))
+				object.render();
 		}
 	}
 	
-	public void updateAll() {
+	public static void updateAll(Camera camera) {
 		for(GameObject object : OBJECTS) {
-			object.update();
+			if(camera.shouldDoUpdate(object))
+				object.update();
 		}
 	}
 	
 	public Point getPos() {
 		return pos;
 	}
-	
-	/**
-	 * Integration into bagel library
-	 * @return Returns an immutable bagel Point
-	 */
-	public bagel.util.Point getImmutablePos() {
-		return new bagel.util.Point(pos.getX(), pos.getY());
-	}
-	
+		
 	public void setPos(Point p) {
 		this.pos.setX(p.getX());
 		this.pos.setY(p.getY());

@@ -51,6 +51,14 @@ public class Point {
 	public double distanceTo(Point b) {
 		return asVector().sub(b.asVector()).length();
 	}
+	
+	/**
+	 * Integration into bagel library
+	 * @return Returns an immutable bagel Point
+	 */
+	public bagel.util.Point toBagelPos() {
+		return new bagel.util.Point(x, y);
+	}
 
 	@Override
 	public String toString() {

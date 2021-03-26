@@ -1,8 +1,8 @@
 package main.engine.view;
 
-import bagel.util.Point;
 import bagel.util.Rectangle;
 import main.engine.GameObject;
+import main.engine.utils.Point;
 import main.engine.utils.RectangleUtils;
 import main.game.Constants;
 
@@ -20,12 +20,16 @@ public class Camera {
 				Constants.FRAME_HEIGHT + RENDER_BUFFER);
 	}
 	
-	public boolean isInFrame(GameObject object) {
-		return viewRect.intersects(object.getImmutablePos());
+	public Camera(double x, double y) {
+		this(new Point(x, y));
 	}
 	
-	public boolean doRender(GameObject object) {
-		return renderRect.intersects(object.getImmutablePos());
+	public boolean shouldDoUpdate(GameObject object) {
+		return viewRect.intersects(object.getPos().toBagelPos());
+	}
+	
+	public boolean shouldDoRender(GameObject object) {
+		return renderRect.intersects(object.getPos().toBagelPos());
 	}
 
 }

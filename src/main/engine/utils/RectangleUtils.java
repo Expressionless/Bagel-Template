@@ -11,5 +11,9 @@ public class RectangleUtils {
 
 		return rect;
 	}
+	
+	public static Rectangle createCenteredRectangle(main.engine.utils.Point centre, int width, int height) {
+		return createCenteredRectangle(centre.toBagelPos(), width, height);
+	}
 
 }
