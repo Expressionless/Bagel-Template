@@ -1,7 +1,5 @@
 package main.engine.state;
 
-import main.game.Engine;
-
 /**
  * Basic State Object
  * @author bmeachem

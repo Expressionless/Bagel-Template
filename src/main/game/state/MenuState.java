@@ -1,9 +1,13 @@
-package main.engine.state;
+package main.game.state;
 
-import main.game.Engine;
+import java.io.File;
+
+import main.engine.res.Sprite;
+import main.engine.state.State;
 
 public class MenuState extends State {
 
+	private Sprite sprite;
 	public MenuState() {
 		super("Menu State");
 	}
@@ -13,8 +17,7 @@ public class MenuState extends State {
 		if(initialized)
 			return;
 		initialized = true;
-		
-		Engine.setState(Engine.gameState);
+		sprite = Sprite.createSprite(new File("").getAbsolutePath() + "\\res\\tiles\\grass.png");
 	}
 
 	@Override
@@ -24,7 +27,7 @@ public class MenuState extends State {
 
 	@Override
 	public void render() {
-
+		sprite.draw(300, 300);
 	}
 
 }

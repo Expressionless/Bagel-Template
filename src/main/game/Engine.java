@@ -9,9 +9,10 @@ import java.util.logging.Logger;
 import bagel.AbstractGame;
 import bagel.Input;
 import bagel.Window;
-import main.engine.state.GameState;
-import main.engine.state.MenuState;
 import main.engine.state.State;
+import main.engine.utils.ResourceManager;
+import main.game.state.GameState;
+import main.game.state.MenuState;
 
 /**
  * Basic Game Class that handles States and an entry point into the Game Loop
@@ -20,15 +21,32 @@ import main.engine.state.State;
  */
 public class Engine extends AbstractGame {
 	private static final Logger log = Logger.getLogger(Engine.class.getName());
+	public static final ResourceManager RES = new ResourceManager();
+	
+	private Thread resourceThread;
 
 	public static final State menuState = new MenuState();
 	public static final State gameState = new GameState();
 	
+	
 	private static State currentState;
+	
+	/**
+	 * Load resources here
+	 */
+	private void loadResources() {
+		// Sprites
+		RES.setActiveDir("\\res\\tiles\\", true);
+		RES.addJob("Sprite", "grass.png");
+	}
 	
 	public Engine() {
         super(FRAME_WIDTH, FRAME_HEIGHT, FRAME_TITLE);
 		Window.setClearColour(0.0, 0.0, 0.0);
+		
+		resourceThread = new Thread(RES);
+		resourceThread.start();
+		//loadResources();
         setState(menuState);
 	}
 
@@ -48,8 +66,15 @@ public class Engine extends AbstractGame {
 	 * @param state
 	 */
 	public static void setState(State state) {
-		if(!state.isInitialized())
+		if(state == null) {
+			log.severe("Attempted to set state to null!");
+			return;
+		}
+		if(!state.isInitialized()) {
+			log.info("Initializing state: " + state.getName());
 			state.init();
+		}
+		log.info("Setting state to: " + state.getName());
 		currentState = state;
 	}
 	

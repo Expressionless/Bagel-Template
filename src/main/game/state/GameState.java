@@ -1,6 +1,7 @@
-package main.engine.state;
+package main.game.state;
 
 import bagel.Window;
+import main.engine.state.State;
 import main.game.Game;
 
 public class GameState extends State {
