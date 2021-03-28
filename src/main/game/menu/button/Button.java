@@ -1,5 +1,6 @@
 package main.game.menu.button;
 
+
 import main.engine.menu.Menu;
 import main.engine.menu.MenuElement;
 import main.game.Engine;
@@ -7,14 +8,19 @@ import main.game.Engine;
 public class Button extends MenuElement {
 
 	private ButtonAction action;
+	private String name;
 	
-	public Button(Menu menu, double x, double y) {
-		super(menu, Engine.RES.getSprite("menu_button"), x, y);
+	public Button(Menu menu, String name, double x, double y) {
+		super(menu, Engine.RES.getSprite("button.png"), x, y);
+		this.name = name;
+		
+		log.info("Created new button: " + name);
 	}
 
 	@Override
 	protected void draw() {
-		sprite.draw(pos);
+		//if(sprite != null)
+		//	sprite.draw(pos);
 	}
 
 	@Override
@@ -28,5 +34,9 @@ public class Button extends MenuElement {
 	
 	public ButtonAction getAction() {
 		return action;
-	}	
+	}
+	
+	public String getName() {
+		return name;
+	}
 }

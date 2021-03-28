@@ -1,8 +1,10 @@
 package main.engine.menu;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public abstract class Menu {
+	protected static final Logger log = Logger.getLogger(Menu.class.getName());
 
 	protected final ArrayList<MenuElement> elements;
 	
@@ -13,6 +15,7 @@ public abstract class Menu {
 	public Menu(String name) {
 		elements = new ArrayList<>();
 		this.name = name;
+		log.info("Created new Menu: " + name);
 	}
 	
 	public void renderElements() {
@@ -25,5 +28,11 @@ public abstract class Menu {
 		for(MenuElement element : elements) {
 			element.update();
 		}
+	}
+	
+	protected void addElement(MenuElement e) {
+		if(e != null) {
+			elements.add(e);
+		} else log.severe(name + " attempted to add a null element!");
 	}
 }

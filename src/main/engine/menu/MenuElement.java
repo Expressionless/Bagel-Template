@@ -1,9 +1,12 @@
 package main.engine.menu;
 
+import java.util.logging.Logger;
+
 import main.engine.res.Sprite;
 import main.engine.utils.Point;
 
 public abstract class MenuElement {
+	protected static final Logger log = Logger.getLogger(MenuElement.class.getName());
 
 	protected Sprite sprite;
 	protected Point pos;

@@ -36,8 +36,10 @@ public class Engine extends AbstractGame {
 	 */
 	private void loadResources() {
 		// Sprites
-		RES.setActiveDir("\\res\\tiles\\", true);
+		RES.setActiveDir("\\res\\tiles\\");
 		RES.addJob("Sprite", "grass.png");
+		RES.setActiveDir("\\res\\menu\\");
+		RES.addJob("Sprite", "button.png");
 	}
 	
 	public Engine() {
@@ -45,9 +47,9 @@ public class Engine extends AbstractGame {
 		Window.setClearColour(0.0, 0.0, 0.0);
 		
 		resourceThread = new Thread(RES);
-		resourceThread.start();
-		//loadResources();
+		RES.run();
         setState(menuState);
+		loadResources();
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import main.engine.res.Sprite;
 
 public class ResourceManager implements Runnable {
 	private static final Logger log = Logger.getLogger(ResourceManager.class.getName());
+	public static String ABS_PATH;
 
 	private final ArrayList<Job> jobs;
 	private String activeDir = "";
@@ -20,7 +21,7 @@ public class ResourceManager implements Runnable {
 
 	public ResourceManager() {
 		jobs = new ArrayList<>();
-		setActiveDir(new File("").getAbsolutePath());
+		ABS_PATH = new File("").getAbsolutePath();
 	}
 
 	public synchronized void start() {
@@ -28,6 +29,7 @@ public class ResourceManager implements Runnable {
 			return;
 		running = true;
 		log.info("Starting ResourceManager Thread");
+		//run();
 	}
 
 	public synchronized void stop() {
@@ -45,13 +47,11 @@ public class ResourceManager implements Runnable {
 	 * 		<li>default: <b>false</b>
 	 */
 	public synchronized void addJob(String type, String path, boolean relative) {
-		if(relative) {
-			log.info("Loading a " + type + " from " + activeDir + path);
-			jobs.add(new Job(type, activeDir + path));
-		} else {
-			log.info("Loading a " + type + " from " + path);
-			jobs.add(new Job(type, path));
-		}
+		if(relative)
+			path = activeDir + path;
+		
+		jobs.add(new Job(type, path));
+		log.info("Adding Job: Load " + type + " from: " + path + ". New jobs queue: " + jobs.size());
 	}
 	
 	public synchronized void addJob(String type, String path) {
@@ -62,10 +62,12 @@ public class ResourceManager implements Runnable {
 	public void run() {
 		start();
 
-		while (running) {
+		while (true) {
 			// Check if there are jobs to process
 			if (jobs.size() > 0) {
+				log.info(Integer.toString(jobs.size()));
 				Job nextJob = jobs.get(0);
+				log.info("Loading a " + nextJob.type.toString() + " from " + nextJob.path);
 				// Load the resource
 				switch (nextJob.type) {
 				case Sprite:
@@ -79,7 +81,6 @@ public class ResourceManager implements Runnable {
 					break;
 				}
 				
-
 				jobs.remove(0);
 			}
 			try {
@@ -89,16 +90,23 @@ public class ResourceManager implements Runnable {
 			}
 		}
 
-		stop();
+		//stop();
 	}
 
+	/**
+	 * Set the active directory relative to the current active directory
+	 * @param dir
+	 * @param relative
+	 */
 	public void setActiveDir(String dir, boolean relative) {
-		String newDir = dir;
+		String newDir = ABS_PATH + dir;
 		if(relative)
 			newDir = this.activeDir + dir;
+		
 		File file = new File(newDir);
-		if(!(file.exists() && file.isDirectory())) {
-			log.severe("Directory: " + newDir + " is not a valid directory");
+		if(!(file.exists())) {
+			log.severe("Directory: " + newDir + " does not exist");
+			return;
 		}
 		this.activeDir = newDir;
 		log.info("Set Active Directory To: " + this.activeDir);

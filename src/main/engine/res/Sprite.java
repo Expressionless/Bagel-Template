@@ -13,6 +13,7 @@ public class Sprite extends Resource {
 	private Sprite(String name, String path) {
 		super(name, path);
 		currentImage = new Image(path);
+		log.info("Created new Sprite: " + name);
 	}
 	
 	public static Sprite createSprite(String path) {
