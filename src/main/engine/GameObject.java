@@ -22,12 +22,18 @@ public abstract class GameObject {
 	
 	protected Point pos;
 	
-	public GameObject(Point pos) {
+	public GameObject(Point pos, Sprite sprite) {
 		log.info("Created new Game Object at: (" + pos.getX() + ", " + pos.getY() + ")");
 		this.pos = pos;
+		this.activeSprite = sprite;
+		
 		for(int i = 0; i < ALARM_COUNT - 1; i++){
 			alarm[i] = new Alarm(null);
 		}
+	}
+	
+	public GameObject(Point pos) {
+		this(pos, null);
 	}
 	
 	/**
@@ -61,6 +67,10 @@ public abstract class GameObject {
 	
 	public Point getPos() {
 		return pos;
+	}
+	
+	public Sprite getCurrentSprite() {
+		return activeSprite;
 	}
 		
 	public void setPos(Point p) {

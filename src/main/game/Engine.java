@@ -10,6 +10,7 @@ import bagel.AbstractGame;
 import bagel.Input;
 import bagel.Window;
 import main.engine.state.State;
+import main.engine.utils.JobOptions;
 import main.engine.utils.ResourceManager;
 import main.game.state.GameState;
 import main.game.state.MenuState;
@@ -36,10 +37,19 @@ public class Engine extends AbstractGame {
 	 */
 	private void loadResources() {
 		// Sprites
-		RES.setActiveDir("\\res\\tiles\\");
+		RES.setActiveDir("\\res\\sprites\\tiles\\");
 		RES.addJob("Sprite", "grass.png");
-		RES.setActiveDir("\\res\\menu\\");
+		RES.setActiveDir("\\res\\sprites\\menu\\");
 		RES.addJob("Sprite", "button.png");
+		
+		RES.setActiveDir("\\res\\font\\");
+		JobOptions options = new JobOptions("Menu Font");
+		options.setFontSize(96);
+		RES.addJob("Font", "FantaisieArtistique.ttf", options);
+		
+		options = new JobOptions("button font");
+		options.setFontSize(64);
+		RES.addJob("Font", "FantaisieArtistique.ttf", options);
 	}
 	
 	public Engine() {
@@ -47,9 +57,9 @@ public class Engine extends AbstractGame {
 		Window.setClearColour(0.0, 0.0, 0.0);
 		
 		resourceThread = new Thread(RES);
+		loadResources();
 		RES.run();
         setState(menuState);
-		loadResources();
 	}
 
 	@Override

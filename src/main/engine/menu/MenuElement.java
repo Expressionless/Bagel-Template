@@ -1,15 +1,10 @@
 package main.engine.menu;
 
-import java.util.logging.Logger;
-
+import main.engine.GameObject;
 import main.engine.res.Sprite;
 import main.engine.utils.Point;
 
-public abstract class MenuElement {
-	protected static final Logger log = Logger.getLogger(MenuElement.class.getName());
-
-	protected Sprite sprite;
-	protected Point pos;
+public abstract class MenuElement extends GameObject {
 	
 	protected Menu menu;
 	/**
@@ -22,7 +17,7 @@ public abstract class MenuElement {
 	protected abstract void step();
 	
 	public MenuElement(Menu menu, Sprite sprite, Point pos) {
-		this.sprite = sprite;
+		super(pos, sprite);
 		this.pos = pos;
 		this.menu = menu;
 	}
@@ -33,9 +28,6 @@ public abstract class MenuElement {
 
 	// Render the sprite
 	public void render() {
-		if(sprite != null)
-			sprite.draw(pos);
-		
 		draw();
 	}
 	

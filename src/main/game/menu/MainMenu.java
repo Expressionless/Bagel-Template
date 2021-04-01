@@ -1,30 +1,38 @@
 package main.game.menu;
 
-import java.util.ArrayList;
-
 import main.engine.menu.Menu;
-import main.game.menu.button.Button;
+import main.game.Constants;
+import main.game.Engine;
+import main.game.state.MenuState;
 
 public class MainMenu extends Menu {
 	
-	private ArrayList<Button> buttons;
+	// Some arbitrary constant to space out the buttons
+	public static final int BUTTON_MARGIN = 30;
 	
-	public MainMenu() {
-		super("Main menu");
-		buttons = new ArrayList<>();
-		
-		loadButtons();
+	public MainMenu(MenuState menuState) {
+		super("Main menu", menuState);
 	}
 	
 	public void loadButtons() {
-		createButton("play", 0, 200);
-		createButton("options", 0, 230);
-		createButton("quit", 0, 260);
-	}
-
-	public void createButton(String name, double x, double y) {
-		Button button = new Button(this, name, x, y);
-		buttons.add(button);
-		addElement(button);
+		
+		final double x = Constants.FRAME_WIDTH / 2 - Engine.RES.getSprite("button.png").getWidth() / 2;
+		final double y = Constants.FRAME_HEIGHT / 3;
+		
+		final double button_height = Engine.RES.getSprite("button.png").getHeight();
+		final double margin = button_height + BUTTON_MARGIN;
+		
+		createButton("play", x, y, () -> {
+			menuState.setCurrentMenu("start");
+		});
+		
+		createButton("options", x, y + margin, () -> {
+			menuState.setCurrentMenu("options");
+		});
+		
+		createButton("quit", x, y + margin * 2, () -> {
+			log.info("Stopping Game");
+			System.exit(0);
+		});
 	}
 }

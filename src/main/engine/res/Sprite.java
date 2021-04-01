@@ -27,15 +27,37 @@ public class Sprite extends Resource {
 		return sprite;
 	}
 	
-	public void draw(Point pos) {
-		currentImage.draw(pos.getX(), pos.getY());
-	}
-	
-	public void draw(double x, double y) {
+	public void drawTopLeft(Point pos) {
+		double width = currentImage.getWidth();
+		double height = currentImage.getHeight();
+		
+		double x = pos.getX() + width / 2;
+		double y = pos.getY() + height / 2;
+		
 		currentImage.draw(x, y);
 	}
 	
-	public void draw(double x, double y, DrawOptions options) {
+	public void drawTopLeft(double x, double y) {
+		drawTopLeft(new Point(x, y));
+	}
+	
+	public void drawCentered(Point pos) {
+		drawCentered(pos.getX(), pos.getY());
+	}
+	
+	public void drawCentered(double x, double y) {
+		currentImage.draw(x, y);
+	}
+	
+	public void drawCentered(double x, double y, DrawOptions options) {
 		currentImage.draw(x , y, options);
+	}
+	
+	public double getWidth() {
+		return currentImage.getWidth();
+	}
+	
+	public double getHeight() {
+		return currentImage.getHeight();
 	}
 }
