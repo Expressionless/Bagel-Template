@@ -3,6 +3,7 @@ package main.game.state;
 import java.util.HashMap;
 
 import bagel.Font;
+import bagel.Input;
 import main.engine.menu.Menu;
 import main.engine.state.State;
 import main.engine.utils.FontUtils;
@@ -15,6 +16,7 @@ public class MenuState extends State {
 	private final HashMap<String, Menu> menus = new HashMap<>();
 	
 	Menu currentMenu;
+	String lastMenu;
 	
 	Font menuFont;
 	
@@ -40,9 +42,9 @@ public class MenuState extends State {
 	
 
 	@Override
-	public void update() {
+	public void update(Input input) {
 		if(currentMenu != null)
-			currentMenu.updateElements();
+			currentMenu.updateElements(input);
 	}
 
 	@Override
@@ -60,12 +62,17 @@ public class MenuState extends State {
 			log.severe("Attempted to change menu to NULL menu: " + menu);
 			return;
 		}
-		
+		if(currentMenu != null)
+			this.lastMenu = currentMenu.getName();
 		this.currentMenu = newMenu;
 	}
 	
 	public Menu getCurrentMenu() {
 		return currentMenu;
+	}
+	
+	public void goToPreviousMenu() {
+		setCurrentMenu(this.lastMenu);
 	}
 	
 	private void addMenu(String name, Menu m) {

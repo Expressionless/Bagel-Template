@@ -1,5 +1,6 @@
 package main.game.state;
 
+import bagel.Input;
 import bagel.Window;
 import main.engine.state.State;
 import main.game.Game;
@@ -19,8 +20,8 @@ public class GameState extends State {
 	}
 
 	@Override
-	public void update() {
-		game.update();
+	public void update(Input input) {
+		game.update(input);
 	}
 
 	@Override

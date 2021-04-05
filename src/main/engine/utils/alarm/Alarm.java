@@ -20,8 +20,9 @@ public class Alarm {
 	}
 	
 	public void update() {
-		if(timer > 0)
+		if(timer > 0) {
 			timer -= 1;
+		}
 		else {
 			if(this.alarm != null) {
 				alarm.event();

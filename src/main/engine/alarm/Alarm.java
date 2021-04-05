@@ -13,6 +13,11 @@ public class Alarm {
 	public void setEvent(AlarmEvent alarm, int timer) {
 		this.alarm = alarm;
 		this.set(timer);
+		System.out.println("Set timer to : " + timer);
+	}
+	
+	public void setEvent(AlarmEvent alarm, double timer) {
+		setEvent(alarm, (int)timer);
 	}
 	
 	public void set(int time) {
@@ -20,8 +25,10 @@ public class Alarm {
 	}
 	
 	public void update() {
-		if(timer > 0)
+		if(timer > 0) {
+			System.out.println("Tick");
 			timer -= 1;
+		}
 		else {
 			if(this.alarm != null) {
 				alarm.event();

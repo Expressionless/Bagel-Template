@@ -19,6 +19,10 @@ public class Point {
 	public Point() {
 		this(0, 0);
 	}
+	
+	public Point(bagel.util.Point pos) {
+		this(pos.x, pos.y);
+	}
 
 	/**
 	 * Create the point (x, y).

@@ -2,6 +2,7 @@ package main.engine.state;
 
 import java.util.logging.Logger;
 
+import bagel.Input;
 import main.engine.menu.Menu;
 
 /**
@@ -17,7 +18,7 @@ public abstract class State {
 
 	public abstract void init();
 	
-	public abstract void update();
+	public abstract void update(Input input);
 	public abstract void render();
 	
 	public State(String name) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import bagel.Input;
 import main.game.menu.button.Button;
 import main.game.menu.button.ButtonAction;
 import main.game.state.MenuState;
@@ -36,9 +37,9 @@ public abstract class Menu {
 		}
 	}
 	
-	public void updateElements() {
+	public void updateElements(Input input) {
 		for(MenuElement element : elements) {
-			element.update();
+			element.update(input);
 		}
 	}
 	
@@ -59,5 +60,9 @@ public abstract class Menu {
 	
 	protected Button createButton(String name, double x, double y) {
 		return createButton(name, x, y, () -> {});
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

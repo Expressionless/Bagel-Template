@@ -11,7 +11,7 @@ public class MainMenu extends Menu {
 	public static final int BUTTON_MARGIN = 30;
 	
 	public MainMenu(MenuState menuState) {
-		super("Main menu", menuState);
+		super("main", menuState);
 	}
 	
 	public void loadButtons() {

@@ -1,13 +1,19 @@
 package main.game.menu.button;
 
 import bagel.Font;
+import bagel.Input;
+import bagel.MouseButtons;
 import main.engine.menu.Menu;
 import main.engine.menu.MenuElement;
 import main.engine.utils.FontUtils;
+import main.engine.utils.Point;
+import main.game.Constants;
 import main.game.Engine;
 
 public class Button extends MenuElement {
 
+	public static boolean LISTENING = true;
+	
 	private ButtonAction action;
 	private String name;
 
@@ -31,8 +37,19 @@ public class Button extends MenuElement {
 	}
 
 	@Override
-	protected void step() {
-		
+	protected void step(Input input) {
+		Point mousePos = new Point(input.getMousePosition());
+		if(bounds.intersects(mousePos) && LISTENING) {
+			if(input.isDown(MouseButtons.LEFT)) {
+				action.action();
+				// Set an alarm to listen for button presses
+				alarm[0].setEvent(() -> {
+					log.info("Setting LISTENING to true");
+					LISTENING = true;
+				}, 10);
+				LISTENING = false;
+			}
+		}
 	}
 
 	public void setAction(ButtonAction action) {

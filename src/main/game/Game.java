@@ -2,6 +2,7 @@ package main.game;
 
 import java.util.logging.Logger;
 
+import bagel.Input;
 import main.engine.GameObject;
 import main.engine.utils.Point;
 import main.engine.view.Camera;
@@ -24,8 +25,8 @@ public class Game {
 	}
 
 	// Update all objects here
-	public void update() {
-		GameObject.updateAll(camera);
+	public void update(Input input) {
+		GameObject.updateAll(camera, input);
 	}
 
 	// Render all objects that need rendering here

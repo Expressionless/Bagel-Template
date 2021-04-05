@@ -68,7 +68,7 @@ public class Engine extends AbstractGame {
 	 */
 	protected void update(Input input) {
 		if(currentState != null) {
-			currentState.update();
+			currentState.update(input);
 			currentState.render();
 		}
 	}
